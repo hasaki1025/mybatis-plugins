@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mybatis.plugins.mapper.BookMapper">
+
+    <resultMap id="BaseResultMap" type="com.mybatis.plugins.domain.Book">
+            <id property="bId" column="b_id" jdbcType="INTEGER"/>
+            <result property="bName" column="b_name" jdbcType="VARCHAR"/>
+            <result property="bType" column="b_type" jdbcType="VARCHAR"/>
+            <result property="bDes" column="b_des" jdbcType="VARCHAR"/>
+            <result property="bAuthor" column="b_author" jdbcType="VARCHAR"/>
+            <result property="bVersion" column="b_version" jdbcType="INTEGER"/>
+            <result property="bIsBeenDeleted" column="b_is_been_deleted" jdbcType="INTEGER"/>
+            <result property="bUri" column="b_uri" jdbcType="VARCHAR"/>
+            <result property="bFiletype" column="b_filetype" jdbcType="VARCHAR"/>
+            <result property="isbn" column="ISBN" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        b_id,b_name,b_type,
+        b_des,b_author,b_version,
+        b_is_been_deleted,b_uri,b_filetype,
+        ISBN
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from book
+        where  b_id = #{bId,jdbcType=INTEGER} 
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from book
+        where  b_id = #{bId,jdbcType=INTEGER} 
+    </delete>
+    <insert id="insert" keyColumn="b_id" keyProperty="bId" parameterType="com.mybatis.plugins.domain.Book" useGeneratedKeys="true">
+        insert into book
+        ( b_id,b_name,b_type
+        ,b_des,b_author,b_version
+        ,b_is_been_deleted,b_uri,b_filetype
+        ,ISBN)
+        values (#{bId,jdbcType=INTEGER},#{bName,jdbcType=VARCHAR},#{bType,jdbcType=VARCHAR}
+        ,#{bDes,jdbcType=VARCHAR},#{bAuthor,jdbcType=VARCHAR},#{bVersion,jdbcType=INTEGER}
+        ,#{bIsBeenDeleted,jdbcType=INTEGER},#{bUri,jdbcType=VARCHAR},#{bFiletype,jdbcType=VARCHAR}
+        ,#{isbn,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" keyColumn="b_id" keyProperty="bId" parameterType="com.mybatis.plugins.domain.Book" useGeneratedKeys="true">
+        insert into book
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="bId != null">b_id,</if>
+                <if test="bName != null">b_name,</if>
+                <if test="bType != null">b_type,</if>
+                <if test="bDes != null">b_des,</if>
+                <if test="bAuthor != null">b_author,</if>
+                <if test="bVersion != null">b_version,</if>
+                <if test="bIsBeenDeleted != null">b_is_been_deleted,</if>
+                <if test="bUri != null">b_uri,</if>
+                <if test="bFiletype != null">b_filetype,</if>
+                <if test="isbn != null">ISBN,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="bId != null">#{bId,jdbcType=INTEGER},</if>
+                <if test="bName != null">#{bName,jdbcType=VARCHAR},</if>
+                <if test="bType != null">#{bType,jdbcType=VARCHAR},</if>
+                <if test="bDes != null">#{bDes,jdbcType=VARCHAR},</if>
+                <if test="bAuthor != null">#{bAuthor,jdbcType=VARCHAR},</if>
+                <if test="bVersion != null">#{bVersion,jdbcType=INTEGER},</if>
+                <if test="bIsBeenDeleted != null">#{bIsBeenDeleted,jdbcType=INTEGER},</if>
+                <if test="bUri != null">#{bUri,jdbcType=VARCHAR},</if>
+                <if test="bFiletype != null">#{bFiletype,jdbcType=VARCHAR},</if>
+                <if test="isbn != null">#{isbn,jdbcType=VARCHAR},</if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.mybatis.plugins.domain.Book">
+        update book
+        <set>
+                <if test="bName != null">
+                    b_name = #{bName,jdbcType=VARCHAR},
+                </if>
+                <if test="bType != null">
+                    b_type = #{bType,jdbcType=VARCHAR},
+                </if>
+                <if test="bDes != null">
+                    b_des = #{bDes,jdbcType=VARCHAR},
+                </if>
+                <if test="bAuthor != null">
+                    b_author = #{bAuthor,jdbcType=VARCHAR},
+                </if>
+                <if test="bVersion != null">
+                    b_version = #{bVersion,jdbcType=INTEGER},
+                </if>
+                <if test="bIsBeenDeleted != null">
+                    b_is_been_deleted = #{bIsBeenDeleted,jdbcType=INTEGER},
+                </if>
+                <if test="bUri != null">
+                    b_uri = #{bUri,jdbcType=VARCHAR},
+                </if>
+                <if test="bFiletype != null">
+                    b_filetype = #{bFiletype,jdbcType=VARCHAR},
+                </if>
+                <if test="isbn != null">
+                    ISBN = #{isbn,jdbcType=VARCHAR},
+                </if>
+        </set>
+        where   b_id = #{bId,jdbcType=INTEGER} 
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.mybatis.plugins.domain.Book">
+        update book
+        set 
+            b_name =  #{bName,jdbcType=VARCHAR},
+            b_type =  #{bType,jdbcType=VARCHAR},
+            b_des =  #{bDes,jdbcType=VARCHAR},
+            b_author =  #{bAuthor,jdbcType=VARCHAR},
+            b_version =  #{bVersion,jdbcType=INTEGER},
+            b_is_been_deleted =  #{bIsBeenDeleted,jdbcType=INTEGER},
+            b_uri =  #{bUri,jdbcType=VARCHAR},
+            b_filetype =  #{bFiletype,jdbcType=VARCHAR},
+            ISBN =  #{isbn,jdbcType=VARCHAR}
+        where   b_id = #{bId,jdbcType=INTEGER} 
+    </update>
+</mapper>
